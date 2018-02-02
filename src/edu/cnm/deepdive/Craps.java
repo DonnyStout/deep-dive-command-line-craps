@@ -1,45 +1,44 @@
 package edu.cnm.deepdive;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class Craps {
 
-  private int plays = 0;
-  private int wins = 0;
+
   private State state = State.COME_OUT;
   private Random rng = new Random();
+  private List<int[]> rolls = new LinkedList<>();
 
-  public int getPlays() {
-    return plays;
+
+  public List<int[]> getRolls() {
+    // TODO - Return a clone.
+    return rolls;
   }
 
-
-  public int getWin() {
-    return wins;
+  protected void reset() {
+    state = State.COME_OUT;
+    rolls.clear();
   }
 
-  public State getState() {
+  public State play() {
+    reset();
+    do {
+      roll();
+    } while  (state == State.POINT);
     return state;
   }
 
-  public void reset() {
-    wins = 0;
-    plays = 0;
-    state = State.COME_OUT;
-  }
-
-  public int roll() {
-    int sum = rng.nextInt(6) + rng.nextInt(6) +2;
+  protected int roll() {
+    int[] dice = {
+      1 + rng.nextInt(6),
+      1 + rng.nextInt(6),
+    };
+    int sum = dice[0] + dice[1];
+    rolls.add(dice);
     state = state.roll(sum);
-    if (state == State.WIN) {
-      wins++;
-    }
     return sum;
-  }
-
-  public void play() {
-    state = State.COME_OUT;
-    plays++;
   }
 
   public enum State {
