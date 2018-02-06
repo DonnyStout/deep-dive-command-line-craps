@@ -1,4 +1,4 @@
-package edu.cnm.deepdive;
+package edu.cnm.deepdive.craps.model;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,8 +13,8 @@ public class Craps {
 
 
   public List<int[]> getRolls() {
-    // TODO - Return a clone.
-    return rolls;
+    List<int[]> copy = new LinkedList<>(rolls);
+    return copy;
   }
 
   protected void reset() {
